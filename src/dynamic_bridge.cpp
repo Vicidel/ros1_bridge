@@ -183,15 +183,25 @@ void update_bridge(
     bridge.ros1_type_name = ros1_type_name;
     bridge.ros2_type_name = ros2_type_name;
 
+    // default QoS, see https://index.ros.org/doc/ros2/Concepts/About-Quality-of-Service-Settings/
     auto ros2_publisher_qos = rclcpp::QoS(rclcpp::KeepLast(10));
+
+    // custom QoS rules
     if (topic_name == "/tf_static") {
       ros2_publisher_qos.keep_all();
       ros2_publisher_qos.transient_local();
     }
+    if (topic_name.find("param_px4") != std::string::npos) {
+      ros2_publisher_qos.keep_all();
+      ros2_publisher_qos.reliable();
+    }
+    if (topic_name.find("telemetry") != std::string::npos) {
+      ros2_publisher_qos.keep_last(2);
+    }
     try {
       bridge.bridge_handles = ros1_bridge::create_bridge_from_1_to_2(
         ros1_node, ros2_node,
-        bridge.ros1_type_name, topic_name, 10,
+        bridge.ros1_type_name, topic_name, 1000,
         bridge.ros2_type_name, topic_name, ros2_publisher_qos);
     } catch (std::runtime_error & e) {
       fprintf(
