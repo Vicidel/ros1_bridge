@@ -193,6 +193,7 @@ void update_bridge(
     }
     if (topic_name.find("param_px4") != std::string::npos) {
       ros2_publisher_qos.keep_all();
+      ros2_publisher_qos.transient_local();
       ros2_publisher_qos.reliable();
     }
     if (topic_name.find("telemetry") != std::string::npos) {
