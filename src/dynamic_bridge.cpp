@@ -476,13 +476,15 @@ int main(int argc, char * argv[])
     return 0;
   }
 
+  // get rigi_id from env
+  std::string rigi_drone_id = std::getenv("RIGI_ID");
+
   // ROS 2 node
   rclcpp::init(argc, argv);
-
-  auto ros2_node = rclcpp::Node::make_shared("ros_bridge");
+  auto ros2_node = rclcpp::Node::make_shared("ros_bridge_"+rigi_drone_id);
 
   // ROS 1 node
-  ros::init(argc, argv, "ros_bridge");
+  ros::init(argc, argv, "ros_bridge_"+rigi_drone_id);
   ros::NodeHandle ros1_node;
 
   // mapping of available topic names to type names
