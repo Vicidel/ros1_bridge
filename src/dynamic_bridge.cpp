@@ -795,11 +795,11 @@ int main(int argc, char * argv[])
     };
 
   auto ros2_poll_timer = ros2_node->create_wall_timer(
-    std::chrono::seconds(1), ros2_poll);
+    std::chrono::seconds(10), ros2_poll);
 
 
   // ROS 1 asynchronous spinner
-  ros::AsyncSpinner async_spinner(1);
+  ros::AsyncSpinner async_spinner(0.1);
   async_spinner.start();
 
   // ROS 2 spinning loop
