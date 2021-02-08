@@ -196,8 +196,11 @@ void update_bridge(
       ros2_publisher_qos.transient_local();
       ros2_publisher_qos.reliable();
     }
-    if (topic_name.find("telemetry") != std::string::npos) {
-      ros2_publisher_qos.keep_last(2);
+    if (topic_name.find("telem") != std::string::npos) {
+      ros2_publisher_qos.keep_last(1);
+    }
+    if (topic_name.find("heartbeat") != std::string::npos) {
+      ros2_publisher_qos.keep_last(1);
     }
     try {
       bridge.bridge_handles = ros1_bridge::create_bridge_from_1_to_2(
@@ -228,6 +231,11 @@ void update_bridge(
     auto topic_name = ros2_publisher.first;
     std::string ros2_type_name = ros2_publisher.second;
     std::string ros1_type_name;
+
+    // if topic_name is heartbeat, ignore to not bridge it to ROS1
+    if (topic_name.find("heartbeat") != std::string::npos) {
+      continue;
+    }
 
     auto ros1_subscriber = ros1_subscribers.find(topic_name);
     if (ros1_subscriber == ros1_subscribers.end()) {
