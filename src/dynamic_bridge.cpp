@@ -191,6 +191,8 @@ void update_bridge(
       ros2_publisher_qos.keep_all();
       ros2_publisher_qos.transient_local();
     }
+
+    // (RIGITECH added: custom QoS rules)
     if (topic_name.find("param_px4") != std::string::npos) {
       ros2_publisher_qos.keep_all();
       ros2_publisher_qos.transient_local();
@@ -232,7 +234,7 @@ void update_bridge(
     std::string ros2_type_name = ros2_publisher.second;
     std::string ros1_type_name;
 
-    // if topic_name is not XX, bridge it to ROS1, otherwise ignore
+    // RIGITECH added: if topic_name is not XX, bridge it to ROS1, otherwise ignore
     if (topic_name.find("XX") != std::string::npos) {
       printf("bridging topic '%s' from ROS2 to ROS1\n", topic_name.c_str()); // found
     }
@@ -808,10 +810,10 @@ int main(int argc, char * argv[])
     };
 
   auto ros2_poll_timer = ros2_node->create_wall_timer(
-    std::chrono::seconds(5), ros2_poll);
+    std::chrono::seconds(5), ros2_poll); // (RIGITECH added: period from 1s to 5s)
 
 
-  // ROS 1 asynchronous spinner
+  // ROS 1 asynchronous spinner (RIGITECH added: freq from 1Hz to 0.2Hz)
   ros::AsyncSpinner async_spinner(0.2);
   async_spinner.start();
 
