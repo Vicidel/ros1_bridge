@@ -160,9 +160,9 @@ function(custom_executable target)
   DESTINATION lib/${PROJECT_NAME})
 endfunction()
 
-# custom_executable(simple_bridge_1_to_2 "src/simple_bridge_1_to_2.cpp"
-#   ROS1_DEPENDENCIES
-#   TARGET_DEPENDENCIES "std_msgs")
+custom_executable(simple_bridge_1_to_2 "src/simple_bridge_1_to_2.cpp"
+  ROS1_DEPENDENCIES
+  TARGET_DEPENDENCIES "std_msgs")
 # custom_executable(simple_bridge_2_to_1 "src/simple_bridge_2_to_1.cpp"
 #   ROS1_DEPENDENCIES
 #   TARGET_DEPENDENCIES "std_msgs")
@@ -195,19 +195,19 @@ install(TARGETS ${PROJECT_NAME}
 # target_link_libraries(static_bridge
 #   ${PROJECT_NAME})
 
-custom_executable(parameter_bridge
-  "src/parameter_bridge.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES ${message_packages})
-target_link_libraries(parameter_bridge
-  ${PROJECT_NAME})
+# custom_executable(parameter_bridge
+#   "src/parameter_bridge.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES ${message_packages})
+# target_link_libraries(parameter_bridge
+#   ${PROJECT_NAME})
 
-custom_executable(dynamic_bridge
-  "src/dynamic_bridge.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES ${ros2_interface_packages})
-target_link_libraries(dynamic_bridge
-  ${PROJECT_NAME})
+# custom_executable(dynamic_bridge
+#   "src/dynamic_bridge.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES ${ros2_interface_packages})
+# target_link_libraries(dynamic_bridge
+#   ${PROJECT_NAME})
 
 if(TEST_ROS1_BRIDGE)
   custom_executable(test_ros2_client_cpp "test/test_ros2_client.cpp")
