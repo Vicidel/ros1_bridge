@@ -209,65 +209,65 @@ install(TARGETS ${PROJECT_NAME}
 # target_link_libraries(dynamic_bridge
 #   ${PROJECT_NAME})
 
-if(TEST_ROS1_BRIDGE)
-  custom_executable(test_ros2_client_cpp "test/test_ros2_client.cpp")
-  ament_target_dependencies("test_ros2_client_cpp${target_suffix}" "ros1_roscpp" "diagnostic_msgs")
-  custom_executable(test_ros2_server_cpp "test/test_ros2_server.cpp")
-  ament_target_dependencies("test_ros2_server_cpp${target_suffix}" "ros1_roscpp" "diagnostic_msgs")
+# if(TEST_ROS1_BRIDGE)
+#   custom_executable(test_ros2_client_cpp "test/test_ros2_client.cpp")
+#   ament_target_dependencies("test_ros2_client_cpp${target_suffix}" "ros1_roscpp" "diagnostic_msgs")
+#   custom_executable(test_ros2_server_cpp "test/test_ros2_server.cpp")
+#   ament_target_dependencies("test_ros2_server_cpp${target_suffix}" "ros1_roscpp" "diagnostic_msgs")
 
-  set(TEST_BRIDGE_DYNAMIC_BRIDGE "$<TARGET_FILE:dynamic_bridge>")
-  set(TEST_BRIDGE_ROS2_CLIENT "$<TARGET_FILE:test_ros2_client_cpp>")
-  set(TEST_BRIDGE_ROS2_SERVER "$<TARGET_FILE:test_ros2_server_cpp>")
-endif()
+#   set(TEST_BRIDGE_DYNAMIC_BRIDGE "$<TARGET_FILE:dynamic_bridge>")
+#   set(TEST_BRIDGE_ROS2_CLIENT "$<TARGET_FILE:test_ros2_client_cpp>")
+#   set(TEST_BRIDGE_ROS2_SERVER "$<TARGET_FILE:test_ros2_server_cpp>")
+# endif()
 
-macro(targets)
-  set(TEST_BRIDGE_RMW ${rmw_implementation})
+# macro(targets)
+#   set(TEST_BRIDGE_RMW ${rmw_implementation})
 
-  configure_file(
-    test/test_topics_across_dynamic_bridge.py.in
-    test_topics_across_dynamic_bridge${target_suffix}.py.genexp
-    @ONLY
-  )
-  file(GENERATE
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
-    INPUT "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}.py.genexp"
-  )
-  add_launch_test(
-    "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
-    TARGET test_topics_across_dynamic_bridge${target_suffix}
-    ENV RMW_IMPLEMENTATION=${rmw_implementation}
-    TIMEOUT 60)
+#   configure_file(
+#     test/test_topics_across_dynamic_bridge.py.in
+#     test_topics_across_dynamic_bridge${target_suffix}.py.genexp
+#     @ONLY
+#   )
+#   file(GENERATE
+#     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
+#     INPUT "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}.py.genexp"
+#   )
+#   add_launch_test(
+#     "${CMAKE_CURRENT_BINARY_DIR}/test_topics_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
+#     TARGET test_topics_across_dynamic_bridge${target_suffix}
+#     ENV RMW_IMPLEMENTATION=${rmw_implementation}
+#     TIMEOUT 60)
 
-  configure_file(
-    test/test_services_across_dynamic_bridge.py.in
-    test_services_across_dynamic_bridge${target_suffix}.py.genexp
-    @ONLY
-  )
-  file(GENERATE
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
-    INPUT "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}.py.genexp"
-  )
-  add_launch_test(
-    "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
-    TARGET test_services_across_dynamic_bridge${target_suffix}
-    ENV RMW_IMPLEMENTATION=${rmw_implementation}
-    TIMEOUT 60)
-endmacro()
+#   configure_file(
+#     test/test_services_across_dynamic_bridge.py.in
+#     test_services_across_dynamic_bridge${target_suffix}.py.genexp
+#     @ONLY
+#   )
+#   file(GENERATE
+#     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
+#     INPUT "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}.py.genexp"
+#   )
+#   add_launch_test(
+#     "${CMAKE_CURRENT_BINARY_DIR}/test_services_across_dynamic_bridge${target_suffix}_$<CONFIG>.py"
+#     TARGET test_services_across_dynamic_bridge${target_suffix}
+#     ENV RMW_IMPLEMENTATION=${rmw_implementation}
+#     TIMEOUT 60)
+# endmacro()
 
-if(TEST_ROS1_BRIDGE)
-  find_package(launch_testing_ament_cmake REQUIRED)
+# if(TEST_ROS1_BRIDGE)
+#   find_package(launch_testing_ament_cmake REQUIRED)
 
-  add_executable(test_ros1_client "test/test_ros1_client.cpp")
-  ament_target_dependencies(test_ros1_client "ros1_diagnostic_msgs" "ros1_roscpp")
-  add_executable(test_ros1_server "test/test_ros1_server.cpp")
-  ament_target_dependencies(test_ros1_server "ros1_diagnostic_msgs" "ros1_roscpp")
-  set(TEST_BRIDGE_ROS1_ENV "${ros1_roslaunch_PREFIX}/env.sh")
-  set(TEST_BRIDGE_ROSCORE "${ros1_roslaunch_PREFIX}/bin/roscore")
-  set(TEST_BRIDGE_ROS1_CLIENT "$<TARGET_FILE:test_ros1_client>")
-  set(TEST_BRIDGE_ROS1_SERVER "$<TARGET_FILE:test_ros1_server>")
+#   add_executable(test_ros1_client "test/test_ros1_client.cpp")
+#   ament_target_dependencies(test_ros1_client "ros1_diagnostic_msgs" "ros1_roscpp")
+#   add_executable(test_ros1_server "test/test_ros1_server.cpp")
+#   ament_target_dependencies(test_ros1_server "ros1_diagnostic_msgs" "ros1_roscpp")
+#   set(TEST_BRIDGE_ROS1_ENV "${ros1_roslaunch_PREFIX}/env.sh")
+#   set(TEST_BRIDGE_ROSCORE "${ros1_roslaunch_PREFIX}/bin/roscore")
+#   set(TEST_BRIDGE_ROS1_CLIENT "$<TARGET_FILE:test_ros1_client>")
+#   set(TEST_BRIDGE_ROS1_SERVER "$<TARGET_FILE:test_ros1_server>")
 
-  call_for_each_rmw_implementation(targets)
-endif()
+#   call_for_each_rmw_implementation(targets)
+# endif()
 
 install(
   PROGRAMS bin/ros1_bridge_generate_factories
