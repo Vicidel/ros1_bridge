@@ -160,16 +160,16 @@ function(custom_executable target)
   DESTINATION lib/${PROJECT_NAME})
 endfunction()
 
-custom_executable(simple_bridge_1_to_2 "src/simple_bridge_1_to_2.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES "std_msgs")
-custom_executable(simple_bridge_2_to_1 "src/simple_bridge_2_to_1.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES "std_msgs")
+# custom_executable(simple_bridge_1_to_2 "src/simple_bridge_1_to_2.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES "std_msgs")
+# custom_executable(simple_bridge_2_to_1 "src/simple_bridge_2_to_1.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES "std_msgs")
 
-custom_executable(simple_bridge "src/simple_bridge.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES "std_msgs")
+# custom_executable(simple_bridge "src/simple_bridge.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES "std_msgs")
 
 add_library(${PROJECT_NAME} SHARED
   "src/builtin_interfaces_factories.cpp"
@@ -188,12 +188,12 @@ install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-custom_executable(static_bridge
-  "src/static_bridge.cpp"
-  ROS1_DEPENDENCIES
-  TARGET_DEPENDENCIES ${ros2_interface_packages})
-target_link_libraries(static_bridge
-  ${PROJECT_NAME})
+# custom_executable(static_bridge
+#   "src/static_bridge.cpp"
+#   ROS1_DEPENDENCIES
+#   TARGET_DEPENDENCIES ${ros2_interface_packages})
+# target_link_libraries(static_bridge
+#   ${PROJECT_NAME})
 
 custom_executable(parameter_bridge
   "src/parameter_bridge.cpp"
