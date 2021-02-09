@@ -232,10 +232,15 @@ void update_bridge(
     std::string ros2_type_name = ros2_publisher.second;
     std::string ros1_type_name;
 
-    // if topic_name is heartbeat, ignore to not bridge it to ROS1
-    if (topic_name.find("heartbeat") != std::string::npos) {
-      continue;
+    // if topic_name is not XX, bridge it to ROS1, otherwise ignore
+    if (topic_name.find("XX") != std::string::npos) {
+      printf("bridging topic '%s' from ROS2 to ROS1\n", topic_name.c_str()); // found
     }
+    else
+    {
+      continue; // ignoring topics
+    }
+    
 
     auto ros1_subscriber = ros1_subscribers.find(topic_name);
     if (ros1_subscriber == ros1_subscribers.end()) {
